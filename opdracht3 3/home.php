@@ -1,9 +1,9 @@
 <?php
 
-require_once("DbConnection.php");
+require_once("db.php");
 $db = new db();
 
-$telefoons = $db->fetchData();
+$telefoons = $db->selectAll();
 
 if (isset($_POST["verzenden"]))
 {
@@ -11,7 +11,7 @@ if (isset($_POST["verzenden"]))
     $model = $_POST["model"];
     $opslag = $_POST["opslag"];
     $prijs = $_POST["prijs"];
-    $db->insertData(2, $merk, $model, $opslag, $prijs);
+    $db->insertData($merk, $model, $opslag, $prijs);
 }
 ?>
 
@@ -29,6 +29,7 @@ if (isset($_POST["verzenden"]))
             <th>model</th>
             <th>opslag</th>
             <th>prijs</th>
+            <th colspan ="2">Action</th>
         </tr>
         <?php foreach ($telefoons as $telefoon) { ?>
             <tr>
@@ -36,6 +37,8 @@ if (isset($_POST["verzenden"]))
                 <td><?php echo $telefoon["model"] ?></td>
                 <td><?php echo $telefoon["opslag"] ?></td>
                 <td><?php echo $telefoon["prijs"] ?></td>
+                <td> <a href="edit.php?id=<?php echo $telefoon["ID"];?>">Edit</a></td>
+                <td> <a href="delete.php?id=<?php echo $telefoon["ID"];?>">Delete</a></td>
             </tr>
             <?php } ?>
     </table>
